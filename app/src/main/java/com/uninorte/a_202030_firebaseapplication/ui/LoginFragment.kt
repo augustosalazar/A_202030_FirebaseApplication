@@ -1,4 +1,4 @@
-package com.uninorte.a_202030_firebaseapplication
+package com.uninorte.a_202030_firebaseapplication.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -7,13 +7,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import com.uninorte.a_202030_firebaseapplication.R
 import com.uninorte.a_202030_firebaseapplication.viewmodel.FirebaseAuthViewModel
 import com.uninorte.a_202030_firebaseapplication.viewmodel.FirebaseRealTimeDBViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_first.*
+import kotlinx.android.synthetic.main.fragment_auth.*
+
 
 @AndroidEntryPoint
-class FirstFragment : Fragment(R.layout.fragment_first) {
+class LoginFragment : Fragment(R.layout.fragment_auth) {
 
     val firebaseAuthViewModel: FirebaseAuthViewModel by activityViewModels()
     val firebaseRealTimeDBViewModelViewModel : FirebaseRealTimeDBViewModel by activityViewModels()
@@ -36,10 +38,10 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
 
         })
 
-        firebaseAuthViewModel.logged.observe(getViewLifecycleOwner(), Observer { status ->
-            if (status == true){
+        firebaseAuthViewModel.logged.observe(getViewLifecycleOwner(), Observer { uid ->
+            if (uid != ""){
                 Toast.makeText(
-                    this.requireContext(), "Logged Ok.",
+                    this.requireContext(), "Logged Ok."+uid,
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
@@ -56,10 +58,6 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
 
         })
 
-        buttonWriteTest.setOnClickListener {
-            firebaseRealTimeDBViewModelViewModel.writeNewMessage(Message((0..100).random(),"Hola"))
-        }
-
         buttonSignIn.setOnClickListener {
             Log.d("MyOut","Sign In")
             firebaseAuthViewModel.signIn("a@a.com","1234567")
@@ -70,8 +68,15 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
             firebaseAuthViewModel.signUp("a@a.com","1234567")
         }
 
-        buttonLogOut.setOnClickListener {
-            firebaseAuthViewModel.logOut()
+        buttonSignInB.setOnClickListener {
+            Log.d("MyOut","Sign In")
+            firebaseAuthViewModel.signIn("b@b.com","1234567")
         }
+
+        buttonSignUpB.setOnClickListener {
+            Log.d("MyOut","Sign Up")
+            firebaseAuthViewModel.signUp("b@b.com","1234567")
+        }
+
     }
 }
