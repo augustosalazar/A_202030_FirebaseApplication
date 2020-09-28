@@ -28,7 +28,7 @@ class MessagesFragment : Fragment(R.layout.fragment_messages) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("MyOut","MessagesFragment onViewCreated")
 
-        firebaseAuthViewModel.logged.observe(getViewLifecycleOwner(), Observer { uid ->
+        firebaseAuthViewModel.logged().observe(getViewLifecycleOwner(), Observer { uid ->
             Log.d("MyOut","MessagesFragment logged with "+uid)
             userUid = uid
 
@@ -40,7 +40,7 @@ class MessagesFragment : Fragment(R.layout.fragment_messages) {
         })
 
         buttonWriteTest.setOnClickListener {
-            userUid = firebaseAuthViewModel.logged.value!!
+            userUid = firebaseAuthViewModel.logged().value!!
             Log.d("MyOut","Writing message for user <"+userUid+">")
             firebaseRealTimeDBViewModelViewModel.writeNewMessage(
                 Message((0..100).random(),"Hola", userUid)

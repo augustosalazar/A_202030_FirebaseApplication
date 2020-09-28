@@ -13,63 +13,29 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.uninorte.a_202030_firebaseapplication.model.Message
 import com.uninorte.a_202030_firebaseapplication.model.User
+import com.uninorte.a_202030_firebaseapplication.repository.FirebaseAuthRepository
 import javax.inject.Inject
 
 
-class FirebaseAuthViewModel : ViewModel() {
+class FirebaseAuthViewModel
+@ViewModelInject constructor(
+    private val repository: FirebaseAuthRepository
+): ViewModel() {
 
-    private lateinit var auth: FirebaseAuth
-    val database = Firebase.database.reference
-    var logged = MutableLiveData<String>()
-    var userCreated = MutableLiveData<Boolean>()
+    fun logged() = repository.logged
 
-    init {
-        auth = Firebase.auth
-        logged.value = ""
-    }
-
-    fun writeNewUser(user: User){
-        database.child("users").push().setValue(user)
-    }
+    fun userCreated() = repository.userCreated
 
     fun signUp(email: String, password : String){
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener{ task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("MyOut", "createUserWithEmail:success")
-                    val user = auth.currentUser
-                    if (user != null) {
-                        writeNewUser(User(user.email, user.uid))
-                    }
-                    userCreated.value = true;
-                } else {
-                    Log.d("MyOut", "createUserWithEmail:failure", task.exception)
-                    userCreated.value = false;
-                }
-            }
+        repository.signUp(email,password)
     }
 
     fun signIn(email: String, password : String){
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener{ task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    if (user != null) {
-                        Log.d("MyOut", "signInWithEmailAndPassword:success " + user.email)
-                        Log.d("MyOut", "signInWithEmailAndPassword:success " + user.uid)
-                        logged.value = user.uid
-                    }
-
-                } else {
-                    logged.value = ""
-                    Log.d("MyOut", "signInWithEmailAndPassword:failure", task.exception)
-                }
-            }
+        repository.signIn(email,password)
     }
 
     fun logOut(){
-        Firebase.auth.signOut()
+        repository.logOut()
     }
 
 }
