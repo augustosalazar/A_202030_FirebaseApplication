@@ -54,8 +54,13 @@ class FirebaseAuthViewModel : ViewModel() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener{ task ->
                 if (task.isSuccessful) {
-                    Log.d("MyOut", "signInWithEmailAndPassword:success "+ auth.currentUser!!.email)
-                    logged.value = auth.currentUser!!.uid
+                    val user = auth.currentUser
+                    if (user != null) {
+                        Log.d("MyOut", "signInWithEmailAndPassword:success " + user.email)
+                        Log.d("MyOut", "signInWithEmailAndPassword:success " + user.uid)
+                        logged.value = user.uid
+                    }
+
                 } else {
                     logged.value = ""
                     Log.d("MyOut", "signInWithEmailAndPassword:failure", task.exception)

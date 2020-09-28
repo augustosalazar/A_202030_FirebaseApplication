@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.uninorte.a_202030_firebaseapplication.R
 import com.uninorte.a_202030_firebaseapplication.model.Message
 import com.uninorte.a_202030_firebaseapplication.viewmodel.FirebaseAuthViewModel
@@ -21,21 +22,15 @@ class MessagesFragment : Fragment(R.layout.fragment_messages) {
     val firebaseAuthViewModel: FirebaseAuthViewModel by activityViewModels()
     val firebaseRealTimeDBViewModelViewModel : FirebaseRealTimeDBViewModel by activityViewModels()
 
+    var userUid : String = "_"
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("MyOut","MessagesFragment onViewCreated")
 
         firebaseAuthViewModel.logged.observe(getViewLifecycleOwner(), Observer { uid ->
-            if (uid == ""){
-                Toast.makeText(
-                    this.requireContext(), "Logged Ok.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                Toast.makeText(
-                    this.requireContext(), "Logged failed.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            Log.d("MyOut","MessagesFragment logged with "+uid)
+            userUid = uid
 
         })
 
@@ -45,11 +40,16 @@ class MessagesFragment : Fragment(R.layout.fragment_messages) {
         })
 
         buttonWriteTest.setOnClickListener {
-            firebaseRealTimeDBViewModelViewModel.writeNewMessage(Message((0..100).random(),"Hola"))
+            userUid = firebaseAuthViewModel.logged.value!!
+            Log.d("MyOut","Writing message for user <"+userUid+">")
+            firebaseRealTimeDBViewModelViewModel.writeNewMessage(
+                Message((0..100).random(),"Hola", userUid)
+            )
         }
 
         buttonLogOut.setOnClickListener {
             firebaseAuthViewModel.logOut()
+            view.findNavController().navigate(R.id.action_messagesFragment_to_authActivity)
         }
     }
 }

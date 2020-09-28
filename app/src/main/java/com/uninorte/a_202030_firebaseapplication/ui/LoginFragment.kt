@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.uninorte.a_202030_firebaseapplication.R
 import com.uninorte.a_202030_firebaseapplication.viewmodel.FirebaseAuthViewModel
 import com.uninorte.a_202030_firebaseapplication.viewmodel.FirebaseRealTimeDBViewModel
@@ -18,11 +19,10 @@ import kotlinx.android.synthetic.main.fragment_auth.*
 class LoginFragment : Fragment(R.layout.fragment_auth) {
 
     val firebaseAuthViewModel: FirebaseAuthViewModel by activityViewModels()
-    val firebaseRealTimeDBViewModelViewModel : FirebaseRealTimeDBViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.d("MyOut","LoginFragment onViewCreated")
         firebaseAuthViewModel.userCreated.observe(getViewLifecycleOwner(), Observer { status ->
             if (status == true){
                 Toast.makeText(
@@ -39,22 +39,19 @@ class LoginFragment : Fragment(R.layout.fragment_auth) {
         })
 
         firebaseAuthViewModel.logged.observe(getViewLifecycleOwner(), Observer { uid ->
+            Log.d("MyOut","LoginFragment logged with "+uid)
             if (uid != ""){
                 Toast.makeText(
                     this.requireContext(), "Logged Ok."+uid,
                     Toast.LENGTH_SHORT
                 ).show()
+                view.findNavController().navigate(R.id.action_loginFragment_to_homeActivity)
             } else {
                 Toast.makeText(
                     this.requireContext(), "Logged failed.",
                     Toast.LENGTH_SHORT
                 ).show()
             }
-
-        })
-
-        firebaseRealTimeDBViewModelViewModel.ldMessageList.observe(getViewLifecycleOwner(), Observer { lista ->
-            Log.d("MyOut","Número de mensajes "+lista.size)
 
         })
 
