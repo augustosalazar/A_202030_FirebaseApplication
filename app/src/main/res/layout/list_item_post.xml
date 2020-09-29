@@ -23,17 +23,22 @@
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:textColor="#1A1A1A"
-                android:textSize="20sp"
+                android:layout_margin="8dp"
+                android:textAlignment="gravity"
+                android:textSize="12sp"
                 tools:text="Lorem Ipsum" />
 
             <TextView
                 android:id="@+id/body"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_margin="8dp"
+                android:textSize="18sp"
+
+                android:textAlignment="gravity"
                 tools:text="Lorem Ipsum Dolor sit amet consectetur adipiscing elit" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
