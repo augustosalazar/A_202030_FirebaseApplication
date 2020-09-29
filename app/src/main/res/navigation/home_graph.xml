@@ -6,12 +6,12 @@
     app:startDestination="@id/messagesFragment">
     <activity
         android:id="@+id/authActivity"
-        android:name="com.uninorte.a_202030_firebaseapplication.ui.AuthActivity"
+        android:name="com.uninorte.a_202030_firebaseapplication.ui.auth.AuthActivity"
         android:label="activity_auth"
         tools:layout="@layout/activity_auth" />
     <fragment
         android:id="@+id/messagesFragment"
-        android:name="com.uninorte.a_202030_firebaseapplication.ui.MessagesFragment"
+        android:name="com.uninorte.a_202030_firebaseapplication.ui.content.MessagesFragment"
         android:label="fragment_messages"
         tools:layout="@layout/fragment_messages" >
         <action

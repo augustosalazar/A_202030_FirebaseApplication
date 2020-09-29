@@ -1,4 +1,4 @@
-package com.uninorte.a_202030_firebaseapplication.ui
+package com.uninorte.a_202030_firebaseapplication.ui.content
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

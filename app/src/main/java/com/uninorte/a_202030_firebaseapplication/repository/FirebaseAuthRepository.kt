@@ -64,6 +64,7 @@ class FirebaseAuthRepository {
     }
 
     fun logOut(){
+        logged.value = ""
         Firebase.auth.signOut()
     }
 

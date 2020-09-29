@@ -11,12 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.HomeActivity"
+            android:name=".ui.content.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="Messages">
         </activity>
         <activity
-            android:name=".ui.AuthActivity"
+            android:name=".ui.auth.AuthActivity"
             android:label="Login"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

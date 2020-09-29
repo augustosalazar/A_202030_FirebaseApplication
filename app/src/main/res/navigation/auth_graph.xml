@@ -6,7 +6,7 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.uninorte.a_202030_firebaseapplication.ui.LoginFragment"
+        android:name="com.uninorte.a_202030_firebaseapplication.ui.auth.LoginFragment"
         android:label="fragment_auth"
         tools:layout="@layout/fragment_auth" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <activity
         android:id="@+id/homeActivity"
-        android:name="com.uninorte.a_202030_firebaseapplication.ui.HomeActivity"
+        android:name="com.uninorte.a_202030_firebaseapplication.ui.content.HomeActivity"
         android:label="activity_home"
         tools:layout="@layout/activity_home" />
 </navigation>
